@@ -111,7 +111,7 @@ def mainaux(cfg: Path = typer.Argument(CONFIG, help='Path to the retroarch cfg f
 	with open(system) as f:
 		text = f.read()
 
-	pattern = re.compile(r'gameid=(.*)\n(?:.*\n)*?description=(.*)(?:.*\n)*?path=(.*)')
+	pattern = re.compile(r'\[(.*)\](?:.*\n)*?description=(.*)(?:.*\n)*?path=(.*)')
 	
 	if playlist and not playlist.endswith('.lpl'):
 		playlist = playlist + '.lpl'
