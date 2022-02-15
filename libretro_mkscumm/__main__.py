@@ -59,7 +59,7 @@ def getPath(cfg: Path, setting):
 
 def mainaux(cfg: Path = typer.Argument(CONFIG, help='Path to the retroarch cfg file.'),
 		playlist: str = typer.Option('ScummVM.lpl', help='Playlist name to create. If not provided, ScummVM.lpl is created or recreated if it exists.'),
-		filters: Optional[List[str]] = typer.Option(None, help='Filters for game paths, you can add this option more than once. Game entries in scummvm.ini whose paths start with one of these don\'t create a .scummvm file or get added to the playlist, use it if you want multiple playlists.')
+		filters: Optional[List[str]] = typer.Option(None, help='Filters for game paths, you can add this option more than once. If the option is used, only game entries in scummvm.ini whose paths start with one of these create a .scummvm file or get added to the playlist, use it if you want multiple playlists.')
 	):
 	"""
 	Creating playlists for the scummvm core in retroarch is complicated.
@@ -157,7 +157,7 @@ def mainaux(cfg: Path = typer.Argument(CONFIG, help='Path to the retroarch cfg f
 		shortcircuit = False
 		if filters:
 			for flt in filters:
-				shortcircuit = game_dir.startswith( os.path.abspath(flt)+os.sep )
+				shortcircuit = not game_dir.startswith( os.path.abspath(flt)+os.sep )
 				if shortcircuit:
 					break
 		

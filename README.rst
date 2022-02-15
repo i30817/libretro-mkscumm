@@ -26,10 +26,10 @@ Options:
                         is created or recreated if it exists.  [default:
                         ScummVM.lpl]
   --filters TEXT        Filters for game paths, you can add this option more
-                        than once. Game entries in scummvm.ini whose paths
-                        start with one of these don't create a .scummvm file
-                        or get added to the playlist, use it if you want
-                        multiple playlists.
+                        than once. If the option is used, only game entries in
+                        scummvm.ini whose paths start with one of these create
+                        a .scummvm file or get added to the playlist, use it
+                        if you want multiple playlists.
   --install-completion  Install completion for the current shell.
   --show-completion     Show completion for the current shell, to copy it or
                         customize the installation.
