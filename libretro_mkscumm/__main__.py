@@ -112,7 +112,10 @@ def mainaux(cfg: Path = typer.Argument(CONFIG, help='Path to the retroarch cfg f
 		text = f.read()
 
 	pattern = re.compile(r'gameid=(.*)\n(?:.*\n)*?description=(.*)(?:.*\n)*?path=(.*)')
-
+	
+	if playlist and not playlist.endswith('.lpl'):
+		playlist = playlist + '.lpl'
+		
 	#in this constructor, if the last is a absolute path returns only that
 	playlist = Path(playlist_dir, playlist)
 	
