@@ -120,7 +120,7 @@ def mainaux(cfg: Path = typer.Argument(CONFIG, help='Path to the retroarch cfg f
 	#in this constructor, if the last is a absolute path returns only that
 	playlist = Path(playlist_dir, playlist)
 	
-	#the playlist to be
+	#the playlist to be, scan content dir is a placeholder
 	json_lpl = {
 		'version': '1.5',
 		'default_core_path': f'{core}',
@@ -192,6 +192,15 @@ fstab systemd external drives is x-systemd.device-timeout=1ms.
 see: https://wiki.archlinux.org/title/fstab#External_devices
 '''
 				)
+				
+	#in order for the 'manage playlist' options to work, 'scan_content_dir' should be something more
+	#appropriate than 'content_dir' if possible
+	#('refresh playlist' would either delete every item or add all items regardless of the filter). 
+	#To that end, iterate over all items and find the 'largest common path prefix'
+	largestcommonprefix = os.path.commonprefix( list(map( lambda x: x['path'], json_lpl['items'] )) )
+	if largestcommonprefix != '':
+		json_lpl['scan_content_dir'] = str(Path(largestcommonprefix)) #remove last '/' if it exists
+	
 	#write or rewrite the playlist
 	with open(playlist, 'w') as f:
 		f.write(json.dumps(json_lpl, indent=4))
