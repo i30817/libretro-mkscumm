@@ -1,0 +1,24 @@
+[tool.poetry]
+name = "libretro_mkscumm"
+version = "0.1.0"
+description = ""
+authors = ["i30817 <i30817@gmail.com>"]
+
+[tool.poetry.dependencies]
+python = "^3.8"
+typer = {extras = ["all"], version = "^0.4.0"}
+
+[tool.poetry.scripts]
+libretrofuzz = 'libretro_mkscumm.__main__:main'
+
+[tool.poetry.urls]
+"homepage" = 'https://github.com/i30817/libretro-mkscumm'
+"documentation" = 'https://github.com/i30817/libretro-mkscumm#readme'
+"Bug Tracker" = 'https://github.com/i30817/libretro-mkscumm/issues'
+
+[tool.poetry.dev-dependencies]
+pytest = "^5.2"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
