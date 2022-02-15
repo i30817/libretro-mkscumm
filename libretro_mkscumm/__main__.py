@@ -105,7 +105,7 @@ def mainaux(cfg: Path = typer.Argument(CONFIG, help='Path to the retroarch cfg f
 	core = os.path.abspath( Path(cores_dir, 'scummvm_libretro' + ( '.dll' if os.name == 'nt' else '.so' ) ) )
 	
 	content_dir  = getPath(cfg, 'rgui_browser_directory')
-	if not content_dir or not content_dir.exists() or not content_dir.is_dir():
+	if not content_dir:
 		content_dir = ''
 	
 	with open(system) as f:
