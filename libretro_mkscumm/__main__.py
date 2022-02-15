@@ -110,7 +110,8 @@ def mainaux(cfg: Path = typer.Argument(CONFIG, help='Path to the retroarch cfg f
 	
 	with open(system) as f:
 		text = f.read()
-
+	
+	#all [] constructs except [scummvm.*], which includes [scummvm], followed by the first description and path
 	pattern = re.compile(r'\[(?!scummvm)(.*)\](?:.*\n)*?description=(.*)(?:.*\n)*?path=(.*)')
 	
 	if playlist and not playlist.endswith('.lpl'):
@@ -161,11 +162,10 @@ def mainaux(cfg: Path = typer.Argument(CONFIG, help='Path to the retroarch cfg f
 				if shortcircuit:
 					break
 		
-		path = Path(Path(game_dir), filename)
-		
 		if not shortcircuit:
 			t = time.monotonic()
 			if os.path.exists(game_dir):
+				path = Path(game_dir, filename)
 				with open(path, 'w') as f:
 					f.write(m.group(1))
 				
