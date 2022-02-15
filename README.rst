@@ -1,25 +1,21 @@
 **Retroarch scummvm playlist creator**
 ======================================
 
-  Creating playlists for the scummvm core in retroarch is complicated.
+Creating playlists for the scummvm core in retroarch is complicated.
 
-  1. Add the game directories to the scummvm.ini file in the Retroarch system
-  directory, by starting the core and 'mass add' all the games, filtering out
-  any false positives.
+1. Add the game directories to the scummvm.ini file in the Retroarch system
+directory, by starting the core and 'mass add' all the games, filtering out
+any false positives.
 
-  2. Create .scummvm files for each and every game entry in the created
-  scummvm.ini, in the game dir so the manual scanner can scan the .scummvm
-  files and assign it a playlist entry.
+2. Create .scummvm files for each and every game entry in the created
+scummvm.ini, in the game dir so the manual scanner can scan the .scummvm
+files and assign it a playlist entry.
 
-  No more. This creates the .scummvm files, then creates a playlist for it, if
-  the scummvm.ini file exists in your Retroarch system dir. In short, you only
-  need to mass add and invoke this program.
+No more. This creates the .scummvm files, then creates a playlist for it, if
+the scummvm.ini file exists in your Retroarch system dir. In short, you only
+need to mass add and invoke this program.
 
 **Usage: __main__.py [OPTIONS] [CFG]**
-
-  libretro-mkscumm creates .scummvm files and playlists from the scummvm.ini
-  in the retroarch system folder, created when you add games using the scummvm
-  core.
   
 Arguments:
   [CFG]  Path to the retroarch cfg file.  [default:
