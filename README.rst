@@ -15,7 +15,7 @@ No more. This creates the .scummvm files, then creates a playlist for it, if
 the scummvm.ini file exists in your Retroarch system dir. In short, you only
 need to mass add and invoke this program.
 
-**Usage: __main__.py [OPTIONS] [CFG]**
+**Usage: libretro-mkscumm [OPTIONS] [CFG]**
   
 Arguments:
   [CFG]  Path to the retroarch cfg file.  [default:
