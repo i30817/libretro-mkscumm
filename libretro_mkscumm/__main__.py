@@ -196,10 +196,14 @@ see: https://wiki.archlinux.org/title/fstab#External_devices
 	#in order for the 'manage playlist' options to work, 'scan_content_dir' should be something more
 	#appropriate than 'content_dir' if possible
 	#('refresh playlist' would either delete every item or add all items regardless of the filter). 
-	#To that end, iterate over all items and find the 'largest common path prefix'
-	largestcommonprefix = os.path.commonprefix( list(map( lambda x: x['path'], json_lpl['items'] )) )
-	if largestcommonprefix != '':
-		json_lpl['scan_content_dir'] = str(Path(largestcommonprefix)) #remove last '/' if it exists
+	#To that end, iterate over all items and find the 'largest common path prefix', with a few special cases
+	
+	if len(json_lpl['items']) == 1:
+		json_lpl['scan_content_dir'] = str(Path(json_lpl['items'][0]['path']).parent)
+	else: #0 or > 1
+		largestcommonprefix = os.path.commonprefix( list(map( lambda x: x['path'], json_lpl['items'] )) )
+		if largestcommonprefix != '':
+			json_lpl['scan_content_dir'] = str(Path(largestcommonprefix))
 	
 	#write or rewrite the playlist
 	with open(playlist, 'w') as f:
