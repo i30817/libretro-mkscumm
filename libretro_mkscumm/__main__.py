@@ -76,9 +76,9 @@ def mainaux(cfg: Path = typer.Argument(CONFIG, help='Path to the retroarch cfg f
 	"""
 	Creating playlists for the scummvm core in retroarch is complicated.
 
-	1. Create the scummvm.ini file in the retroarch system directory, by loading, then starting the core from retroarch, then 'mass add' all the games (note this isn't the retroarch scanner - it's a functionality of the core GUI - under the arrow next to 'Add Game...' in the classic theme - the retroarch scan directory function should not be used for scummvm games, and the manual scanner is unneeded with this program).
+	1. Add the games, by loading, then starting the core from retroarch, then 'mass add' all the games (note this isn't the retroarch scanner - it's a functionality of the core GUI - under the arrow next to 'Add Game...' in the classic theme - the retroarch scan directory function should not be used for scummvm games, and the manual scanner is unneeded with this program).
 	
-	2. Download the required engine files and extracting them to the right dir. I recommend installing the scummvm required files with 'core system files downloader' in retroarch if you're running the normal core¹.
+	2. Download the required engine files and extract them to the right dir. I recommend installing the scummvm required files with 'core system files downloader' in retroarch if you're running the normal core¹.
 	
 	3. Setup the paths to the required files in the scummvm core GUI options.
 	
