@@ -194,7 +194,7 @@ see: https://wiki.archlinux.org/title/fstab#External_devices
 				)
 				
 	#'scan_content_dir' should be the common path, if possible or a empty string if there is no common
-	#path or no games are in the playlist at all. That disables the to option 'refresh playlist'.
+	#path or no games are in the playlist at all. That disables the option to 'refresh playlist'.
 	if len(all_paths) > 0:
 		json_lpl['scan_content_dir'] = os.path.commonpath( all_paths )
 	
