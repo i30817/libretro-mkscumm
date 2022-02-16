@@ -163,6 +163,7 @@ def mainaux(cfg: Path = typer.Argument(CONFIG, help='Path to the retroarch cfg f
 					break
 		
 		if not shortcircuit:
+			path = Path(game_dir, filename)
 			json_lpl['items'].append(
 			{
 				'path': f'{path}',
@@ -175,7 +176,6 @@ def mainaux(cfg: Path = typer.Argument(CONFIG, help='Path to the retroarch cfg f
 			all_paths.append(game_dir)
 			t = time.monotonic()
 			if os.path.exists(game_dir):
-				path = Path(game_dir, filename)
 				with open(path, 'w') as f:
 					f.write(m.group(1))
 			else:
