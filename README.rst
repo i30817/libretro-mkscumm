@@ -31,7 +31,7 @@ names is added to the thumbnail server try to install and use libretrofuzz:
 
 ``pip3 install git+https://github.com/i30817/libretrofuzz.git``
 
-.. [1] The diablodiab more updated core at http://build.bot.nu/nightly/ requires updated files from scummvm upstream, you can get them with:
+.. [1] The diablodiab daily build core at http://build.bot.nu/nightly/ requires updated files from scummvm upstream, you can get them with:
 
   https://github.com/scummvm/scummvm/archive/refs/heads/master.zip
 
