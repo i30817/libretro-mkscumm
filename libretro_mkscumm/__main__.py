@@ -163,22 +163,21 @@ def mainaux(cfg: Path = typer.Argument(CONFIG, help='Path to the retroarch cfg f
 					break
 		
 		if not shortcircuit:
+			json_lpl['items'].append(
+			{
+				'path': f'{path}',
+				'label': label,
+				'core_path': f'{core}',
+				'core_name': 'ScummVM',
+				'crc32': '00000000|crc',
+				'db_name': 'ScummVM.lpl'
+			})
 			all_paths.append(game_dir)
 			t = time.monotonic()
 			if os.path.exists(game_dir):
 				path = Path(game_dir, filename)
 				with open(path, 'w') as f:
 					f.write(m.group(1))
-				
-				json_lpl['items'].append(
-				{
-					'path': f'{path}',
-					'label': label,
-					'core_path': f'{core}',
-					'core_name': 'ScummVM',
-					'crc32': '00000000|crc',
-					'db_name': 'ScummVM.lpl'
-				})
 			else:
 				invalid_paths.append(game_dir)
 			elapsed_time = time.monotonic() - t
@@ -210,7 +209,7 @@ see: https://wiki.archlinux.org/title/fstab#External_devices
 		f.write(json.dumps(json_lpl, indent=4))
 	
 	if invalid_paths:
-		typer.echo('Paths in scummvm.ini that are not accessible and therefore didn\'t have .scummvm files created or were added to the playlist:')
+		typer.echo('Paths in scummvm.ini were not accessible and therefore didn\'t have .scummvm files created, please rerun this command when the games drive is connected:')
 		for invalid in invalid_paths:
 			typer.echo(f'{invalid}')
 def main():
