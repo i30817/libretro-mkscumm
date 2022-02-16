@@ -198,8 +198,10 @@ see: https://wiki.archlinux.org/title/fstab#External_devices
 	#(with that, 'refresh playlist' could either delete every item, if there was no .scummvm file in
 	#that path or add all items regardless of the filter). However in the case where the items are empty
 	#there is no alternative. But since they are empty, it doesn't actually matter and could help
-	#for to 'refresh' the playlist when this program is not available if the .scummvm files are inside
-	#the content_dir (which is actually likely but not certain as i mentioned).
+	#to 'refresh' the playlist when this program is not available if the .scummvm files are inside
+	#the content_dir (which is actually likely but not certain as i mentioned). Note that there are
+	#two reasons for the game list to be empty, you didn't add games to the core, or they're currently
+	#unavailable in the filesystem.
 
 	length = len(json_lpl['items'])
 	if length == 1:
