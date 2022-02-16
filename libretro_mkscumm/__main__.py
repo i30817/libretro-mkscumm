@@ -154,7 +154,6 @@ def mainaux(cfg: Path = typer.Argument(CONFIG, help='Path to the retroarch cfg f
 		
 		#create scummvm files; all scummvm.ini 'path' game entries are absolute directories.
 		game_dir = os.path.abspath(m.group(3))
-		all_paths.append(game_dir)
 		
 		shortcircuit = False
 		if filters:
@@ -164,6 +163,7 @@ def mainaux(cfg: Path = typer.Argument(CONFIG, help='Path to the retroarch cfg f
 					break
 		
 		if not shortcircuit:
+			all_paths.append(game_dir)
 			t = time.monotonic()
 			if os.path.exists(game_dir):
 				path = Path(game_dir, filename)
