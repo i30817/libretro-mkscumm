@@ -57,17 +57,22 @@ def getPath(cfg: Path, setting):
 		return None
 	return Path(fdir)
 
-def writeExtraPath(ini: Path, extra: str):
+def writeExtraPaths(ini: Path, extra: Path, saves: Path):
 	with open(ini) as f:
 	    file_content = f.read()
 	import configparser
 	configParser = configparser.RawConfigParser()
 	configParser.read_string(file_content)
+	write = False
 	if 'extrapath' not in configParser['scummvm']:
 		configParser['scummvm']['extrapath'] = str(extra)
+		write = True
+	if 'savepath' not in configParser['scummvm']:
+		configParser['scummvm']['savepath'] = str(saves)
+		write = True
+	if write:
 		with open(ini, 'w') as f:
 			configParser.write(f)
-	    	
 
 def mainaux(cfg: Path = typer.Argument(CONFIG, help='Path to the retroarch cfg file.'),
 		playlist: str = typer.Option('ScummVM.lpl', help='Playlist name to create. If not provided, ScummVM.lpl is created or recreated if it exists.'),
@@ -124,8 +129,13 @@ def mainaux(cfg: Path = typer.Argument(CONFIG, help='Path to the retroarch cfg f
 	if not extra_dir.exists() or not extra_dir.is_dir() or len(list(extra_dir.glob("./*"))) == 0:
 		typer.echo(f'Extra scummvm data dir does not exist or is empty.\nPlease see the documentation to download it.')
 		raise typer.Abort()
+		
+	saves_dir  = getPath(cfg, 'savefile_directory')
+	if not saves_dir or not saves_dir.exists() or not saves_dir.is_dir():
+		typer.echo(f'Invalid Retroarch saves directory: {saves_dir}')
+		raise typer.Abort()
 	
-	writeExtraPath(system, extra_dir)
+	writeExtraPaths(system, extra_dir, saves_dir)
 		
 	cores_dir  = getPath(cfg, 'libretro_directory')
 	if not cores_dir.exists() or not cores_dir.is_dir():
