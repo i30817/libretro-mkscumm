@@ -143,7 +143,9 @@ def mainaux(cfg: Path = typer.Argument(CONFIG, help='Path to the retroarch cfg f
 	#if you have a systemd mount that is 'automount' and has a timeout, and the drive is not mounted, 
 	#on each and every call to a path that would be inside the mountpoint, systemd attempts to mount 
 	#and waits the timeout. This obviously slows down checking for files. Don't do this.
-	#I'll warn if 'it's taking too long' by pointing to the mountpoint.
+	#I'll warn once if 'it's taking too long' by pointing to the mountpoint if the exists() call takes
+	#more than 1 second 5 times.
+	latch_counter = 5
 	
 	for m in re.finditer(pattern, text):
 		label = m.group(2)
@@ -176,23 +178,26 @@ def mainaux(cfg: Path = typer.Argument(CONFIG, help='Path to the retroarch cfg f
 			})
 			t = time.monotonic()
 			if os.path.exists(game_dir):
+				elapsed_time = time.monotonic() - t
 				with open(path, 'w') as f:
 					f.write(m.group(1))
 			else:
+				elapsed_time = time.monotonic() - t
 				invalid_paths.append(game_dir)
-			elapsed_time = time.monotonic() - t
-			if elapsed_time > 10:
-				typer.echo(f'Warning: check for file existance took too long {elapsed_time}')
-				typer.echo(
-'''It is likely you have a disconnected external drive and a /etc/fstab file
-with nofail and/or automount and a too long timeout or no timeout.
-Without a timeout, the default timeout for automount is 90 seconds!
-The minmal timeout value, which i recommend in this situation for
-fstab systemd external drives is x-systemd.device-timeout=1ms.
-see: https://wiki.archlinux.org/title/fstab#External_devices
-'''
-				)
-				
+			
+			if elapsed_time > 1:
+				latch_counter = latch_counter - 1
+				if latch_counter == 0:
+					from textwrap import dedent
+					typer.echo(f'Warning: exists() call is taking too long.')
+					typer.echo(dedent('''\
+					It is likely you have a disconnected external drive and a /etc/fstab file
+					with nofail and/or automount and a too long timeout or no timeout.
+					Without a timeout, the default timeout for automount is 90 seconds!
+					The minimal timeout value, which i recommend in this situation for
+					fstab systemd external drives is x-systemd.device-timeout=1ms.
+					see: https://wiki.archlinux.org/title/fstab#External_devices'''))
+	
 	#'scan_content_dir' should be the common path, if possible or a empty string if there is no common
 	#path or no games are in the playlist at all. That disables the option to 'refresh playlist'.
 	if len(all_paths) > 0:
@@ -203,7 +208,7 @@ see: https://wiki.archlinux.org/title/fstab#External_devices
 		f.write(json.dumps(json_lpl, indent=4))
 	
 	if invalid_paths:
-		typer.echo('Paths in scummvm.ini were not accessible and therefore didn\'t have .scummvm files created, please rerun this command when the games drive is connected:')
+		typer.echo('Some paths in scummvm.ini are not available.\nWhen they are, please rerun this command to create the .scummvm files:')
 		for invalid in invalid_paths:
 			typer.echo(f'{invalid}')
 def main():
