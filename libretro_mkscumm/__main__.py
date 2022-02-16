@@ -120,7 +120,7 @@ def mainaux(cfg: Path = typer.Argument(CONFIG, help='Path to the retroarch cfg f
 	#in this constructor, if the last is a absolute path returns only that
 	playlist = Path(playlist_dir, playlist)
 	
-	#the playlist to be, scan content dir is a placeholder
+	#the playlist to be, scan content dir is a placeholder that disables refresh playlist
 	json_lpl = {
 		'version': '1.5',
 		'default_core_path': f'{core}',
@@ -163,6 +163,7 @@ def mainaux(cfg: Path = typer.Argument(CONFIG, help='Path to the retroarch cfg f
 					break
 		
 		if not shortcircuit:
+			all_paths.append(game_dir)
 			path = Path(game_dir, filename)
 			json_lpl['items'].append(
 			{
@@ -173,7 +174,6 @@ def mainaux(cfg: Path = typer.Argument(CONFIG, help='Path to the retroarch cfg f
 				'crc32': '00000000|crc',
 				'db_name': 'ScummVM.lpl'
 			})
-			all_paths.append(game_dir)
 			t = time.monotonic()
 			if os.path.exists(game_dir):
 				with open(path, 'w') as f:
@@ -193,16 +193,10 @@ see: https://wiki.archlinux.org/title/fstab#External_devices
 '''
 				)
 				
-	#in order for the 'manage playlist' options to work, 'scan_content_dir' should be something more
-	#appropriate than 'content_dir' if possible
-	#(with that, 'refresh playlist' could either delete every item, if there was no .scummvm file in
-	#that path or add all items regardless of the filter). So calculate a common path.
-	#However in the case where the items are empty or there is no common root directory the setting
-	#should be a empty string. This disables the option to 'refresh playlist' in retroarch.
+	#'scan_content_dir' should be the common path, if possible or a empty string if there is no common
+	#path or no games are in the playlist at all. That disables the to option 'refresh playlist'.
 	if len(all_paths) > 0:
-		largestcommonpath = os.path.commonpath( all_paths )
-		if largestcommonpath != '':
-			json_lpl['scan_content_dir'] = largestcommonpath
+		json_lpl['scan_content_dir'] = os.path.commonpath( all_paths )
 	
 	#write or rewrite the playlist
 	with open(playlist, 'w') as f:
