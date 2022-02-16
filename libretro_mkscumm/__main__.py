@@ -195,15 +195,20 @@ see: https://wiki.archlinux.org/title/fstab#External_devices
 				
 	#in order for the 'manage playlist' options to work, 'scan_content_dir' should be something more
 	#appropriate than 'content_dir' if possible
-	#('refresh playlist' would either delete every item or add all items regardless of the filter). 
-	#To that end, iterate over all items and find the 'largest common path prefix', with a few special cases
-	
-	if len(json_lpl['items']) == 1:
+	#(with that, 'refresh playlist' could either delete every item, if there was no .scummvm file in
+	#that path or add all items regardless of the filter). However in the case where the items are empty
+	#there is no alternative. But since they are empty, it doesn't actually matter and could help
+	#for to 'refresh' the playlist when this program is not available if the .scummvm files are inside
+	#the content_dir (which is actually likely but not certain as i mentioned).
+
+	length = len(json_lpl['items'])
+	if length == 1:
+		#the Path construction to immediately turn into str is to remove the last / if any, which is consistent with RA
 		json_lpl['scan_content_dir'] = str(Path(json_lpl['items'][0]['path']).parent)
-	else: #0 or > 1
-		largestcommonprefix = os.path.commonpath( list(map( lambda x: x['path'], json_lpl['items'] )) )
-		if largestcommonprefix != '':
-			json_lpl['scan_content_dir'] = str(Path(largestcommonprefix))
+	elif length > 1:
+		largestcommonpath = os.path.commonpath( list(map( lambda x: x['path'], json_lpl['items'] )) )
+		if largestcommonpath != '':
+			json_lpl['scan_content_dir'] = str(Path(largestcommonpath))
 	
 	#write or rewrite the playlist
 	with open(playlist, 'w') as f:
