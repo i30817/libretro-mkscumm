@@ -35,7 +35,7 @@ names is added to the thumbnail server try to install and use libretrofuzz:
 
   https://github.com/scummvm/scummvm/archive/refs/heads/master.zip
 
-  Then extract the files in the subdirectory ``dists/engine-data`` into the retroarch ``system/scummvm/extra directory``, creating it if it doesn't exist.
+  Then extract the files in the subdirectory ``dists/engine-data`` into the retroarch ``system/scummvm/extra`` directory, creating it if it doesn't exist.
 
 **Usage: libretro-mkscumm [OPTIONS] [CFG]**
   
