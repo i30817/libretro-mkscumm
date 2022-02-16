@@ -130,7 +130,7 @@ def mainaux(cfg: Path = typer.Argument(CONFIG, help='Path to the retroarch cfg f
 		'right_thumbnail_mode': 0,
 		'left_thumbnail_mode': 0,
 		'sort_mode': 0,
-		'scan_content_dir': f'{content_dir}',
+		'scan_content_dir': '',
 		'scan_file_exts': 'scummvm',
 		'scan_dat_file_path': '',
 		'scan_search_recursively': False,
@@ -139,7 +139,7 @@ def mainaux(cfg: Path = typer.Argument(CONFIG, help='Path to the retroarch cfg f
 		'items': []
 	}
 	invalid_paths = []
-	
+	all_paths = []
 	#if you have a systemd mount that is 'automount' and has a timeout, and the drive is not mounted, 
 	#on each and every call to a path that would be inside the mountpoint, systemd attempts to mount 
 	#and waits the timeout. This obviously slows down checking for files. Don't do this.
@@ -153,7 +153,9 @@ def mainaux(cfg: Path = typer.Argument(CONFIG, help='Path to the retroarch cfg f
 		filename = filename + '.scummvm' #final filename
 		
 		#create scummvm files; all scummvm.ini 'path' game entries are absolute directories.
-		game_dir = os.path.abspath(m.group(3))+os.sep
+		game_dir = os.path.abspath(m.group(3))
+		all_paths.append(game_dir)
+		game_dir = game_dir+os.sep
 		
 		shortcircuit = False
 		if filters:
@@ -196,21 +198,13 @@ see: https://wiki.archlinux.org/title/fstab#External_devices
 	#in order for the 'manage playlist' options to work, 'scan_content_dir' should be something more
 	#appropriate than 'content_dir' if possible
 	#(with that, 'refresh playlist' could either delete every item, if there was no .scummvm file in
-	#that path or add all items regardless of the filter). However in the case where the items are empty
-	#there is no alternative. But since they are empty, it doesn't actually matter and could help
-	#to 'refresh' the playlist when this program is not available if the .scummvm files are inside
-	#the content_dir (which is actually likely but not certain as i mentioned). Note that there are
-	#two reasons for the game list to be empty, you didn't add games to the core, or they're currently
-	#unavailable in the filesystem.
-
-	length = len(json_lpl['items'])
-	if length == 1:
-		#the Path construction to immediately turn into str is to remove the last / if any, which is consistent with RA
-		json_lpl['scan_content_dir'] = str(Path(json_lpl['items'][0]['path']).parent)
-	elif length > 1:
-		largestcommonpath = os.path.commonpath( list(map( lambda x: x['path'], json_lpl['items'] )) )
+	#that path or add all items regardless of the filter). So calculate a common path.
+	#However in the case where the items are empty or there is no common root directory the setting
+	#should be a empty string. This disables the option to 'refresh playlist' in retroarch.
+	if len(all_paths) > 0:
+		largestcommonpath = os.path.commonpath( all_paths )
 		if largestcommonpath != '':
-			json_lpl['scan_content_dir'] = str(Path(largestcommonpath))
+			json_lpl['scan_content_dir'] = largestcommonpath
 	
 	#write or rewrite the playlist
 	with open(playlist, 'w') as f:
