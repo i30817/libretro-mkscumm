@@ -11,9 +11,10 @@ scummvm games, and the manual scanner is unneeded with this program).
 
 2. Download the required engine files and extracting them to the right dir.
 I recommend installing the scummvm required files with 'core system files
-downloader' in retroarch if you're running the normal core¹.
+downloader' in retroarch if you're running the normal core. [1]_
 
 3. Setup the paths to the required files in the scummvm core GUI options.
+\
 
 4. Create .scummvm files for each and every game entry in the created
 scummvm.ini, in the game dir so the manual scanner can scan the .scummvm
@@ -23,20 +24,18 @@ libretro-mkscumm removes the need for step 3 and 4 if you did step 1 and 2.
 
 To update this program with pip installed, type:
 
-pip3 install --upgrade git+https://github.com/i30817/libretro-mkscumm.git
+``pip3 install --upgrade git+https://github.com/i30817/libretro-mkscumm.git``
 
 If you'd like to try to download missing coverart until a PR with scummvm
 names is added to the thumbnail server try to install and use libretrofuzz:
 
-pip3 install git+https://github.com/i30817/libretrofuzz.git
+``pip3 install git+https://github.com/i30817/libretrofuzz.git``
 
-¹ The diablodiab more updated core at http://build.bot.nu/nightly/ requires
-updated files from scummvm upstream, you can get them with:
+.. [1] The diablodiab more updated core at http://build.bot.nu/nightly/ requires updated files from scummvm upstream, you can get them with:
 
-https://github.com/scummvm/scummvm/archive/refs/heads/master.zip
+  https://github.com/scummvm/scummvm/archive/refs/heads/master.zip
 
-Then extract the files in the subdirectory ``dists/engine-data`` into the
-retroarch ``system/scummvm/extra directory``, creating it if it doesn't exist.
+  Then extract the files in the subdirectory ``dists/engine-data`` into the retroarch ``system/scummvm/extra directory``, creating it if it doesn't exist.
 
 **Usage: libretro-mkscumm [OPTIONS] [CFG]**
   
