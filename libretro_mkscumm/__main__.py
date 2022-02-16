@@ -151,7 +151,7 @@ def mainaux(cfg: Path = typer.Argument(CONFIG, help='Path to the retroarch cfg f
 		text = f.read()
 	
 	#all [] constructs except [scummvm.*], which includes [scummvm], followed by the first description and path
-	pattern = re.compile(r'\[(?!scummvm)(.*)\](?:.*\n)*?description=(.*)(?:.*\n)*?path=(.*)')
+	pattern = re.compile(r'\[(?!scummvm)([^]]*)\](?:.*\n)*?description\s?=\s?(.*)(?:.*\n)*?path\s?=\s?(.*)')
 	
 	if playlist and not playlist.endswith('.lpl'):
 		playlist = playlist + '.lpl'
