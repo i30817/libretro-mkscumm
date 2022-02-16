@@ -20,7 +20,7 @@
 
 #this little program does the second for you and you don't need to use the manual scanner and the names will be
 #'exactly equal' to the scummvm.ini names, illegal windows characters or not, by filling the label entry in the playlist.
-#It has a option to set another name for the resulting playlist and to 'ignore' one or more base directories
+#It has a option to set another name for the resulting playlist and filter with a accept prefix one or more base directories
 #this allows you to filter games into different playlists like if you used the manual scanner twice, in case you don't
 #want to overpopulate the scummvm playlist.
 
@@ -201,7 +201,7 @@ see: https://wiki.archlinux.org/title/fstab#External_devices
 	if len(json_lpl['items']) == 1:
 		json_lpl['scan_content_dir'] = str(Path(json_lpl['items'][0]['path']).parent)
 	else: #0 or > 1
-		largestcommonprefix = os.path.commonprefix( list(map( lambda x: x['path'], json_lpl['items'] )) )
+		largestcommonprefix = os.path.commonpath( list(map( lambda x: x['path'], json_lpl['items'] )) )
 		if largestcommonprefix != '':
 			json_lpl['scan_content_dir'] = str(Path(largestcommonprefix))
 	
