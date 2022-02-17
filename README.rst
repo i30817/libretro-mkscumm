@@ -35,7 +35,7 @@ names is added to the thumbnail server try to install and use libretrofuzz:
 
   http://build.bot.nu/assets/system/ScummVM.zip
 
-  Then extract the files into the retroarch ``system`` directory.
+  Then extract the zip into the retroarch ``system`` directory.
 
 **Usage: libretro-mkscumm [OPTIONS] [CFG]**
   
