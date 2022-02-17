@@ -103,7 +103,7 @@ def mainaux(cfg: Path = typer.Argument(CONFIG, help='Path to the retroarch cfg f
 	
 	http://build.bot.nu/assets/system/ScummVM.zip
 	
-	Then extract the files into the retroarch system directory, creating it if it doesn't exist.
+	Then extract the files into the retroarch system directory.
 	"""
 	if not cfg.exists() or not cfg.is_file():
 		typer.echo(f'Invalid Retroarch cfg file: {cfg}')
