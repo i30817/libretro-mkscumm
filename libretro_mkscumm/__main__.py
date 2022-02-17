@@ -101,9 +101,9 @@ def mainaux(cfg: Path = typer.Argument(CONFIG, help='Path to the retroarch cfg f
 	
 	¹ The diablodiab more updated core at http://build.bot.nu/nightly/ requires updated files from scummvm upstream, you can get them with:
 	
-	https://github.com/scummvm/scummvm/archive/refs/heads/master.zip
+	http://build.bot.nu/assets/system/ScummVM.zip
 	
-	Then extract the files in the subdirectory 'dists/engine-data' into the retroarch system/scummvm/extra directory, creating it if it doesn't exist.
+	Then extract the files into the retroarch system directory, creating it if it doesn't exist.
 	"""
 	if not cfg.exists() or not cfg.is_file():
 		typer.echo(f'Invalid Retroarch cfg file: {cfg}')
