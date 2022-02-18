@@ -167,9 +167,9 @@ def mainaux(cfg: Path = typer.Argument(CONFIG, help='Path to the retroarch cfg f
 		target1 = Path(extra_dir, 'CM32L_CONTROL.ROM')
 		target2 = Path(extra_dir, 'CM32L_PCM.ROM')
 		if not target1.exists():
-			os.link(mt32rom1, target1)
+			os.link(cm32rom1, target1)
 		if not target2.exists():
-			os.link(mt32rom2, target2)
+			os.link(cm32rom2, target2)
 	
 	#write scummvm core specific paths so the user doesn't have to
 	soundfont = Path(extra_dir, 'Roland_SC-55.sf2')
