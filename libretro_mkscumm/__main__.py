@@ -226,7 +226,8 @@ def mainaux(cfg: Path = typer.Argument(CONFIG, help='Path to the retroarch cfg f
 			
 			if elapsed_time > 1:
 				latch_counter = latch_counter - 1
-				if latch_counter == 0:
+				if latch_counter == 0 or elapsed_time > 10:
+					latch_counter = 0
 					from textwrap import dedent
 					typer.echo(f'Warning: exists() call is taking too long.')
 					typer.echo(dedent('''\
