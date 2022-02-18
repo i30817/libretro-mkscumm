@@ -57,7 +57,7 @@ def getPath(cfg: Path, setting):
 		return None
 	return Path(fdir)
 
-def writeExtraPaths(ini: Path, extra: Path, saves: Path):
+def writeExtraPaths(ini: Path, extra: Path, saves: Path, soundfont: Path):
 	with open(ini) as f:
 	    file_content = f.read()
 	import configparser
@@ -69,6 +69,9 @@ def writeExtraPaths(ini: Path, extra: Path, saves: Path):
 		write = True
 	if 'savepath' not in configParser['scummvm']:
 		configParser['scummvm']['savepath'] = str(saves)
+		write = True
+	if 'soundfont' not in configParser['scummvm'] and soundfont.is_file():
+		configParser['scummvm']['soundfont'] = str(soundfont)
 		write = True
 	if write:
 		with open(ini, 'w') as f:
@@ -134,8 +137,6 @@ def mainaux(cfg: Path = typer.Argument(CONFIG, help='Path to the retroarch cfg f
 	if not saves_dir or not saves_dir.exists() or not saves_dir.is_dir():
 		typer.echo(f'Invalid Retroarch saves directory: {saves_dir}')
 		raise typer.Abort()
-	
-	writeExtraPaths(system, extra_dir, saves_dir)
 		
 	cores_dir  = getPath(cfg, 'libretro_directory')
 	if not cores_dir.exists() or not cores_dir.is_dir():
@@ -149,6 +150,30 @@ def mainaux(cfg: Path = typer.Argument(CONFIG, help='Path to the retroarch cfg f
 	
 	with open(system) as f:
 		text = f.read()
+	
+	#if the MT32 and CM32L roms exist in the system dir (for instance for dosbox)
+	mt32rom1 = Path(system_dir, 'MT32_CONTROL.ROM')
+	mt32rom2 = Path(system_dir, 'MT32_PCM.ROM')
+	cm32rom1 = Path(system_dir, 'CM32L_CONTROL.ROM')
+	cm32rom2 = Path(system_dir, 'CM32L_PCM.ROM')
+	if mt32rom1.is_file() and mt32rom2.is_file():
+		target1 = Path(extra_dir, 'MT32_CONTROL.ROM')
+		target2 = Path(extra_dir, 'MT32_PCM.ROM')
+		if not target1.exists():
+			os.link(mt32rom1, target1)
+		if not target2.exists():
+			os.link(mt32rom2, target2)
+	if cm32rom1.is_file() and cm32rom2.is_file():
+		target1 = Path(extra_dir, 'CM32L_CONTROL.ROM')
+		target2 = Path(extra_dir, 'CM32L_PCM.ROM')
+		if not target1.exists():
+			os.link(mt32rom1, target1)
+		if not target2.exists():
+			os.link(mt32rom2, target2)
+	
+	#write scummvm core specific paths so the user doesn't have to
+	soundfont = Path(extra_dir, 'Roland_SC-55.sf2')
+	writeExtraPaths(system, extra_dir, saves_dir, soundfont)
 	
 	#all [] constructs except [scummvm.*], which includes [scummvm], followed by the first description and path
 	pattern = re.compile(r'\[(?!scummvm)([^]]*)\](?:.*\n)*?description\s?=\s?(.*)(?:.*\n)*?path\s?=\s?(.*)')
