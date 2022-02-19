@@ -241,7 +241,7 @@ def mainaux(cfg: Path = typer.Argument(CONFIG, help='Path to the retroarch cfg f
 				'db_name': 'ScummVM.lpl'
 			})
 			t = time.monotonic()
-			if os.path.exists(game_dir):
+			if os.path.isdir(game_dir):
 				elapsed_time = time.monotonic() - t
 				with open(path, 'w') as f:
 					f.write(m.group(1))
