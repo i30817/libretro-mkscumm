@@ -47,7 +47,7 @@ Options:
   --playlist TEXT       Playlist name to create. If not provided, ScummVM.lpl
                         is created or recreated if it exists.  [default:
                         ScummVM.lpl]
-  --filters TEXT        Filters for game paths, you can add this option more
+  --filter TEXT         Filter for game paths, you can add this option more
                         than once. If the option is used, only game entries in
                         scummvm.ini whose paths start with one of these create
                         a .scummvm file or get added to the playlist, use it
