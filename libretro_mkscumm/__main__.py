@@ -197,7 +197,7 @@ def mainaux(cfg: Path = typer.Argument(CONFIG, help='Path to the retroarch cfg f
 		'scan_content_dir': '',
 		'scan_file_exts': 'scummvm',
 		'scan_dat_file_path': '',
-		'scan_search_recursively': False,
+		'scan_search_recursively': True,
 		'scan_search_archives': False,
 		'scan_filter_dat_content': False,
 		'items': []
