@@ -60,12 +60,12 @@ Options:
 
 To install the program, type on the cmd line
 
-+---------------------+-------------------------------------------------------------------------------------------------------------------+
-| Linux               | ``pip install --force-reinstall https://github.com/i30817/libretro-mkscumm/archive/master.zip``                   |
-+---------------------+-------------------------------------------------------------------------------------------------------------------+
++---------------------+-----------------------------------------------------------------------------------------------------------+
+| Linux               | ``pip install --force-reinstall https://github.com/i30817/libretro-mkscumm/archive/master.zip``           |
++---------------------+-----------------------------------------------------------------------------------------------------------+
 | Windows             | ``python -m pip install --force-reinstall https://github.com/i30817/libretro-mkscumm/archive/master.zip`` |
-+---------------------+-------------------------------------------------------------------------------------------------------------------+
-| Run in Windows      | ``python PYTHON_INSTALL_DIR\Scripts\libretro-mkscumm or python -m libretro_mkscumm``                              |
-+---------------------+-------------------------------------------------------------------------------------------------------------------+
++---------------------+-----------------------------------------------------------------------------------------------------------+
+| Run in Windows      | ``python PYTHON_INSTALL_DIR\Scripts\libretrofuzz or python -m libretro_mkscumm``                          |
++---------------------+-----------------------------------------------------------------------------------------------------------+
  
 In windows, you'll want to check the option to “Add Python to PATH” when installing python, to be able to execute the script from any path of the cmd line.
