@@ -59,15 +59,13 @@ Options:
 
 
 To install the program, type on the cmd line
- ``pip3 install git+https://github.com/i30817/libretro-mkscumm.git``
- 
- In windows, you'll want to check the option to “Add Python to PATH” when installing python, to be able to execute the script from any path of the cmd line.
 
-To upgrade the program
- ``pip3 install --upgrade git+https://github.com/i30817/libretro-mkscumm.git``
-
-To remove
- ``pip3 uninstall libretro-mkscumm``
++---------------------+-------------------------------------------------------------------------------------------------------------------+
+| Linux               | ``pip install --force-reinstall https://github.com/i30817/libretro-mkscumm/archive/master.zip``                   |
++---------------------+-------------------------------------------------------------------------------------------------------------------+
+| Windows             | ``python -m pip install --force-reinstall https://github.com/i30817/libretro-mkscumm/archive/master.zip`` |
++---------------------+-------------------------------------------------------------------------------------------------------------------+
+| Run in Windows      | ``python PYTHON_INSTALL_DIR\Scripts\libretro-mkscumm or python -m libretro_mkscumm``                              |
++---------------------+-------------------------------------------------------------------------------------------------------------------+
  
-To install a program that can download missing coverart by fuzzy matching
- ``pip3 install git+https://github.com/i30817/libretrofuzz.git``
+In windows, you'll want to check the option to “Add Python to PATH” when installing python, to be able to execute the script from any path of the cmd line.
