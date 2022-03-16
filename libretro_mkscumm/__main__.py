@@ -1,9 +1,6 @@
 #! /usr/bin/env python3
 
 
-
-#dependency install for testing: pip3 install typer[all]
-
 #project to create .scummvm files in the right directories for the Retroarch
 #manual scanner to pick up and use for creation of a scummvm playlist.
 
@@ -82,6 +79,8 @@ def mainaux(cfg: Path = typer.Argument(CONFIG, help='Path to the retroarch cfg f
 		filters: Optional[List[str]] = typer.Option(None, '--filter', help='Filter for game paths, you can add this option more than once. If the option is used, only game entries in scummvm.ini whose paths start with one of these create a .scummvm file or get added to the playlist, use it if you want multiple playlists.')
 	):
 	"""
+	Retroarch scummvm playlist creator
+	
 	Creating playlists for the scummvm core in retroarch is complicated.
 
 	1. Add the games, by loading, then starting the core from retroarch, then 'mass add' all the games (note this isn't the retroarch scanner - it's a functionality of the core GUI - click the arrow next to 'Add Game...' in the classic theme - the retroarch scan directory function should not be used for scummvm games, and the manual scanner is unneeded with this program).
@@ -96,11 +95,11 @@ def mainaux(cfg: Path = typer.Argument(CONFIG, help='Path to the retroarch cfg f
 
 	To update this program with pip installed, type:
 
-	pip3 install --upgrade git+https://github.com/i30817/libretro-mkscumm.git
+	pip install --force-reinstall https://github.com/i30817/libretro-mkscumm/archive/master.zip
 	
 	If you'd like to try to download missing coverart until a PR with scummvm names is added to the thumbnail server try to install and use libretrofuzz:
 	
-	pip3 install git+https://github.com/i30817/libretrofuzz.git
+	pip install --force-reinstall https://github.com/i30817/libretrofuzz/archive/master.zip
 	
 	¹ The diablodiab more updated core at http://build.bot.nu/nightly/ requires updated files from scummvm upstream, you can get them with:
 	

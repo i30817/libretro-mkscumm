@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "libretro_mkscumm"
-version = "2.2.1"
+version = "2.2.2"
 description = ""
 authors = ["i30817 <i30817@gmail.com>"]
 
