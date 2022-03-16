@@ -24,12 +24,12 @@ libretro-mkscumm removes the need for step 3 and 4 if you did step 1 and 2.
 
 To update this program with pip installed, type:
 
-``pip3 install --upgrade git+https://github.com/i30817/libretro-mkscumm.git``
+``pip install --upgrade git+https://github.com/i30817/libretro-mkscumm.git``
 
 If you'd like to try to download missing coverart until a PR with scummvm
 names is added to the thumbnail server try to install and use libretrofuzz:
 
-``pip3 install git+https://github.com/i30817/libretrofuzz.git``
+``pip install git+https://github.com/i30817/libretrofuzz.git``
 
 .. [1] The diablodiab daily build core at http://build.bot.nu/nightly/ requires updated files from scummvm upstream, you can get them with:
 
