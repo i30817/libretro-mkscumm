@@ -131,22 +131,22 @@ def mainaux(cfg: Path = typer.Argument(CONFIG, help='Path to the retroarch cfg f
 		raise typer.Abort()
 	
 	extra_dir = Path(system_dir, 'scummvm', 'extra' )
-	if not extra_dir.exists() or not extra_dir.is_dir() or len(list(extra_dir.glob("./*"))) == 0:
+	if not extra_dir.is_dir() or len(list(extra_dir.glob("./*"))) == 0:
 		typer.echo(f'Extra scummvm extra dir does not exist or is empty.\nPlease see the documentation to download it.')
 		raise typer.Abort()
 	
 	theme_dir = Path(system_dir, 'scummvm', 'theme' )
-	if not theme_dir.exists() or not theme_dir.is_dir() or len(list(theme_dir.glob("./*"))) == 0:
-		typer.echo(f'Extra scummvm theme dir does not exist or is empty.\nPlease see the documentation to download it.')
+	if not theme_dir.is_dir():
+		typer.echo(f'Extra scummvm theme dir does not exist.\nPlease see the documentation to download it.')
 		raise typer.Abort()
     
 	saves_dir  = getPath(cfg, 'savefile_directory')
-	if not saves_dir or not saves_dir.exists() or not saves_dir.is_dir():
+	if not saves_dir or not saves_dir.is_dir():
 		typer.echo(f'Invalid Retroarch saves directory: {saves_dir}')
 		raise typer.Abort()
 		
 	cores_dir  = getPath(cfg, 'libretro_directory')
-	if not cores_dir.exists() or not cores_dir.is_dir():
+	if not cores_dir.is_dir():
 		typer.echo(f'Invalid Retroarch cores directory: {cores_dir}')
 		raise typer.Abort()
 	core = os.path.abspath( Path(cores_dir, 'scummvm_libretro' + ( '.dll' if os.name == 'nt' else '.so' ) ) )
