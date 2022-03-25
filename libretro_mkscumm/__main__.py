@@ -110,23 +110,23 @@ def mainaux(cfg: Path = typer.Argument(CONFIG, help='Path to the retroarch cfg f
 	
 	Then extract the zip into the retroarch system directory.
 	"""
-	if not cfg.exists() or not cfg.is_file():
+	if not cfg.is_file():
 		typer.echo(f'Invalid Retroarch cfg file: {cfg}')
 		raise typer.Abort()
 	
 	playlist_dir = getPath(cfg, 'playlist_directory')
 	
-	if not playlist_dir.exists() or not playlist_dir.is_dir() or not os.access(playlist_dir, os.W_OK):
+	if not playlist_dir.is_dir() or not os.access(playlist_dir, os.W_OK):
 		typer.echo(f'Invalid Retroarch playlist directory: {playlist_dir}')
 		raise typer.Abort()
 
 	system_dir = getPath(cfg, 'system_directory')	
-	if not system_dir.exists() or not system_dir.is_dir():
+	if not system_dir.is_dir():
 		typer.echo(f'Invalid Retroarch system directory: {system_dir}')
 		raise typer.Abort()
 
 	system   = Path(system_dir, 'scummvm.ini')
-	if not system.exists() or not system.is_file():
+	if not system.is_file():
 		typer.echo(f'Invalid scummvm.ini file: {system}')
 		raise typer.Abort()
 	
