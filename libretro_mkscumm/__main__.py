@@ -54,7 +54,7 @@ def getPath(cfg: Path, setting):
 		return None
 	return Path(fdir)
 
-def writeExtraPaths(ini: Path, extra: Path, saves: Path, soundfont: Path):
+def writeExtraPaths(ini: Path, extra: Path, theme: Path, saves: Path, soundfont: Path):
 	with open(ini) as f:
 	    file_content = f.read()
 	import configparser
@@ -63,6 +63,9 @@ def writeExtraPaths(ini: Path, extra: Path, saves: Path, soundfont: Path):
 	write = False
 	if 'extrapath' not in configParser['scummvm']:
 		configParser['scummvm']['extrapath'] = str(extra)
+		write = True
+	if 'themepath' not in configParser['scummvm']:
+		configParser['scummvm']['themepath'] = str(theme)
 		write = True
 	if 'savepath' not in configParser['scummvm']:
 		configParser['scummvm']['savepath'] = str(saves)
@@ -129,9 +132,14 @@ def mainaux(cfg: Path = typer.Argument(CONFIG, help='Path to the retroarch cfg f
 	
 	extra_dir = Path(system_dir, 'scummvm', 'extra' )
 	if not extra_dir.exists() or not extra_dir.is_dir() or len(list(extra_dir.glob("./*"))) == 0:
-		typer.echo(f'Extra scummvm data dir does not exist or is empty.\nPlease see the documentation to download it.')
+		typer.echo(f'Extra scummvm extra dir does not exist or is empty.\nPlease see the documentation to download it.')
 		raise typer.Abort()
-		
+	
+	theme_dir = Path(system_dir, 'scummvm', 'theme' )
+	if not theme_dir.exists() or not theme_dir.is_dir() or len(list(theme_dir.glob("./*"))) == 0:
+		typer.echo(f'Extra scummvm theme dir does not exist or is empty.\nPlease see the documentation to download it.')
+		raise typer.Abort()
+    
 	saves_dir  = getPath(cfg, 'savefile_directory')
 	if not saves_dir or not saves_dir.exists() or not saves_dir.is_dir():
 		typer.echo(f'Invalid Retroarch saves directory: {saves_dir}')
@@ -172,7 +180,7 @@ def mainaux(cfg: Path = typer.Argument(CONFIG, help='Path to the retroarch cfg f
 	
 	#write scummvm core specific paths so the user doesn't have to
 	soundfont = Path(extra_dir, 'Roland_SC-55.sf2')
-	writeExtraPaths(system, extra_dir, saves_dir, soundfont)
+	writeExtraPaths(system, extra_dir, theme_dir, saves_dir, soundfont)
 	
 	#all [] constructs except [scummvm.*], which includes [scummvm], followed by the first description and path
 	pattern = re.compile(r'\[(?!scummvm)([^]]*)\](?:.*\n)*?description\s?=\s?(.*)(?:.*\n)*?path\s?=\s?(.*)')
