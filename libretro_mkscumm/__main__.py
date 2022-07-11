@@ -36,7 +36,16 @@ import time
 ###########################################
 
 
-CONFIG = Path(Path.home(), '.config', 'retroarch', 'retroarch.cfg')
+if sys.platform == 'win32': #don't be fooled, this is for 64 bits too
+    CONFIG = Path(r'C:/RetroArch-Win64/retroarch.cfg') #64bits default installer path
+    if not CONFIG.exists():
+        CONFIG = Path(r'C:/RetroArch/retroarch.cfg') #fallback to the 32 bits default installer path
+elif sys.platform == 'darwin':
+    CONFIG = Path(Path.home(), 'Library', 'Application Support', 'RetroArch', 'retroarch.cfg') #what I _think_ is the default on macosx
+elif sys.platform.startswith('linux'):
+    CONFIG = Path(Path.home(), '.config', 'retroarch', 'retroarch.cfg') #default installer path in unix
+else:
+    CONFIG = None #give up
 
 #00-1f are ascii control codes, rest is 'normal' illegal windows filename chars according to powershell + &
 forbidden	=	r'[\u0022\u003c\u003e\u007c\u0000\u0001\u0002\u0003\u0004\u0005\u0006\u0007\u0008' + \
