@@ -37,13 +37,15 @@ names is added to the thumbnail server try to install and use libretrofuzz:
 
   Then extract the zip into the retroarch ``system`` directory.
 
-**Usage: libretro-mkscumm [OPTIONS] [CFG]**
+libretro-mkscumm [OPTIONS] [CFG]
+  :CFG:                 Path to the retroarch cfg file. If not default, asked from the user.
   
-Arguments:
-  [CFG]  Path to the retroarch cfg file.  [default:
-         ~/.config/retroarch/retroarch.cfg]
-
-Options:
+                        Linux default:   ``~/.config/retroarch/retroarch.cfg``
+  
+                        Windows default: ``%APPDATA%/RetroArch/retroarch.cfg``
+  
+                        MacOS default:   ``~/Library/Application Support/RetroArch/retroarch.cfg``
+  
   --playlist TEXT       Playlist name to create. If not provided, ScummVM.lpl
                         is created or recreated if it exists.  [default:
                         ScummVM.lpl]
