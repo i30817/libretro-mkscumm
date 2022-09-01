@@ -44,7 +44,7 @@ libretro-mkscumm [OPTIONS] [CFG]
   
                         Windows default: ``%APPDATA%/RetroArch/retroarch.cfg``
   
-                        MacOS default:   ``~/Library/Application Support/RetroArch/retroarch.cfg``
+                        MacOS default:   ``~/Library/Application Support/RetroArch/config/retroarch.cfg``
   
   --playlist TEXT       Playlist name to create. If not provided, ScummVM.lpl
                         is created or recreated if it exists.  [default:
