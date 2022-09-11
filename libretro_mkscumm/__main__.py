@@ -95,6 +95,9 @@ def writeExtraPaths(ini: Path, extra: Path, theme: Path, saves: Path, soundfont:
 		with open(ini, 'w') as f:
 			configParser.write(f)
 
+def error(error: str):
+    typer.echo(typer.style(error, fg=typer.colors.RED, bold=True))
+
 def mainaux(cfg: Path = typer.Argument(CONFIG, help='Path to the retroarch cfg file.'),
 		playlist: str = typer.Option('ScummVM.lpl', help='Playlist name to create. If not provided, ScummVM.lpl is created or recreated if it exists.'),
 		filters: Optional[List[str]] = typer.Option(None, '--filter', help='Filter for game paths, you can add this option more than once. If the option is used, only game entries in scummvm.ini whose paths start with one of these create a .scummvm file or get added to the playlist, use it if you want multiple playlists.')
@@ -129,44 +132,44 @@ def mainaux(cfg: Path = typer.Argument(CONFIG, help='Path to the retroarch cfg f
 	Then extract the zip into the retroarch system directory.
 	"""
 	if not cfg.is_file():
-		typer.echo(f'Invalid Retroarch cfg file: {cfg}')
-		raise typer.Abort()
+		error(f'Invalid Retroarch cfg file: {cfg}')
+		raise typer.Exit(code=1)
 	
 	playlist_dir = getPath(cfg, 'playlist_directory')
 	
 	if not playlist_dir.is_dir() or not os.access(playlist_dir, os.W_OK):
-		typer.echo(f'Invalid Retroarch playlist directory: {playlist_dir}')
-		raise typer.Abort()
+		error(f'Invalid Retroarch playlist directory: {playlist_dir}')
+		raise typer.Exit(code=1)
 
 	system_dir = getPath(cfg, 'system_directory')	
 	if not system_dir.is_dir():
-		typer.echo(f'Invalid Retroarch system directory: {system_dir}')
-		raise typer.Abort()
+		error(f'Invalid Retroarch system directory: {system_dir}')
+		raise typer.Exit(code=1)
 
 	system   = Path(system_dir, 'scummvm.ini')
 	if not system.is_file():
-		typer.echo(f'Invalid scummvm.ini file: {system}')
-		raise typer.Abort()
+		error(f'Invalid scummvm.ini file: {system}')
+		raise typer.Exit(code=1)
 	
 	extra_dir = Path(system_dir, 'scummvm', 'extra' )
 	if not extra_dir.is_dir() or len(list(extra_dir.glob("./*"))) == 0:
-		typer.echo(f'Extra scummvm extra dir does not exist or is empty.\nPlease see the documentation to download it.')
-		raise typer.Abort()
+		error(f'Extra scummvm extra dir does not exist or is empty.\nPlease see the documentation to download it.')
+		raise typer.Exit(code=1)
 	
 	theme_dir = Path(system_dir, 'scummvm', 'theme' )
 	if not theme_dir.is_dir():
-		typer.echo(f'Extra scummvm theme dir does not exist.\nPlease see the documentation to download it.')
-		raise typer.Abort()
+		error(f'Extra scummvm theme dir does not exist.\nPlease see the documentation to download it.')
+		raise typer.Exit(code=1)
     
 	saves_dir  = getPath(cfg, 'savefile_directory')
 	if not saves_dir or not saves_dir.is_dir():
-		typer.echo(f'Invalid Retroarch saves directory: {saves_dir}')
-		raise typer.Abort()
+		error(f'Invalid Retroarch saves directory: {saves_dir}')
+		raise typer.Exit(code=1)
 		
 	cores_dir  = getPath(cfg, 'libretro_directory')
 	if not cores_dir.is_dir():
-		typer.echo(f'Invalid Retroarch cores directory: {cores_dir}')
-		raise typer.Abort()
+		error(f'Invalid Retroarch cores directory: {cores_dir}')
+		raise typer.Exit(code=1)
 	core = os.path.abspath( Path(cores_dir, 'scummvm_libretro' + ( '.dll' if os.name == 'nt' else '.so' ) ) )
 	
 	content_dir  = getPath(cfg, 'rgui_browser_directory')
@@ -298,12 +301,13 @@ def mainaux(cfg: Path = typer.Argument(CONFIG, help='Path to the retroarch cfg f
 		f.write(json.dumps(json_lpl, indent=4))
 	
 	if invalid_paths:
-		typer.echo('Some paths in scummvm.ini are not available.\nWhen they are, please rerun this command to create the .scummvm files:')
+		error('Some paths in scummvm.ini are not available.\nWhen they are, please rerun this command to create the .scummvm files:')
 		for invalid in invalid_paths:
-			typer.echo(f'{invalid}')
+			error(f'{invalid}')
 def main():
 	typer.run(mainaux)
 	return 0
 
 if __name__ == "__main__":
-	typer.run(mainaux)
+	error('Please run libretro-mkscumm instead of running the script directly')
+    raise typer.Exit(code=1)
