@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "libretro_mkscumm"
+name = "libretro_scummvm_playlist"
 version = "2.2.2"
 description = ""
 authors = ["i30817 <i30817@gmail.com>"]
@@ -9,7 +9,7 @@ python = "^3.8"
 typer = {extras = ["all"], version = "^0.5.0"}
 
 [tool.poetry.scripts]
-libretro-mkscumm = 'libretro_mkscumm.__main__:main'
+libretro-scummvm-playlist = 'libretro_scummvm_playlist.__main__:main'
 
 [tool.poetry.urls]
 "homepage" = 'https://github.com/i30817/libretro-mkscumm'

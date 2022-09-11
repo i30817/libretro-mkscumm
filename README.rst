@@ -20,16 +20,16 @@ downloader' in retroarch if you're running the normal core [1]_.
 scummvm.ini, in the game dir so the manual scanner can scan the .scummvm
 files and assign it a playlist entry.
 
-libretro-mkscumm removes the need for step 3 and 4 if you did step 1 and 2.
+libretro-scummvm-playlist removes the need for step 3 and 4 if you did step 1 and 2.
 
-To update this program with pip installed, type:
+To update this program to the latest release with pip installed, type:
 
-``pip install --upgrade git+https://github.com/i30817/libretro-mkscumm.git``
+``pip install --force-reinstall libretro_scummvm_playlist``
 
 If you'd like to try to download missing coverart until a PR with scummvm
 names is added to the thumbnail server try to install and use libretrofuzz:
 
-``pip install git+https://github.com/i30817/libretrofuzz.git``
+``pip install --force-reinstall libretro_fuzz``
 
 .. [1] The diablodiab daily build core at http://build.bot.nu/nightly/ requires updated files from scummvm upstream, you can get them with:
 
@@ -37,7 +37,7 @@ names is added to the thumbnail server try to install and use libretrofuzz:
 
   Then extract the zip into the retroarch ``system`` directory.
 
-libretro-mkscumm [OPTIONS] [CFG]
+libretro-scummvm-playlist [OPTIONS] [CFG]
   :CFG:                 Path to the retroarch cfg file. If not default, asked from the user.
   
                         Linux default:   ``~/.config/retroarch/retroarch.cfg``
@@ -62,10 +62,10 @@ libretro-mkscumm [OPTIONS] [CFG]
 
 To install the program, type on the cmd line
 
-+---------------------+-----------------------------------------------------------------------------------------------------------+
-| Linux               | ``pip install --force-reinstall https://github.com/i30817/libretro-mkscumm/archive/master.zip``           |
-+---------------------+-----------------------------------------------------------------------------------------------------------+
-| Windows             | ``python -m pip install --force-reinstall https://github.com/i30817/libretro-mkscumm/archive/master.zip`` |
-+---------------------+-----------------------------------------------------------------------------------------------------------+
++----------------+-------------------------------------------------------------------------------------------------+
+| Latest release | ``pip install --force-reinstall libretro_scummvm_playlist``                                     |
++----------------+-------------------------------------------------------------------------------------------------+
+| Current code   | ``pip install --force-reinstall https://github.com/i30817/libretro-mkscumm/archive/master.zip`` |
++----------------+-------------------------------------------------------------------------------------------------+
 
-In windows, you'll want to check the option to “Add Python to PATH” when installing python, to be able to execute the script from any path of the cmd line.
+In windows, you'll want to check the option to “Add Python to PATH” when installing python, to be able to install and execute the script from any path of the cmd line
