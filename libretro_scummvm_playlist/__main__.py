@@ -141,6 +141,16 @@ def mainaux(cfg: Path = typer.Argument(CONFIG, help='Path to the retroarch cfg f
         error(f'Invalid Retroarch playlist directory: {playlist_dir}')
         raise typer.Exit(code=1)
 
+    if playlist and not playlist.endswith('.lpl'):
+        playlist = playlist + '.lpl'
+    
+    #in this constructor, if the last is a absolute path returns only that
+    playlist = Path(playlist_dir, playlist)
+    
+    if playlist.is_dir() or not os.access(playlist, os.W_OK):
+        error(f'Invalid playlist file: {playlist}')
+        raise typer.Exit(code=1)
+
     system_dir = getPath(cfg, 'system_directory')    
     if not system_dir.is_dir():
         error(f'Invalid Retroarch system directory: {system_dir}')
@@ -205,12 +215,6 @@ def mainaux(cfg: Path = typer.Argument(CONFIG, help='Path to the retroarch cfg f
     
     #all [] constructs except [scummvm.*], which includes [scummvm], followed by the first description and path
     pattern = re.compile(r'\[(?!scummvm)([^]]*)\](?:.*\n)*?description\s?=\s?(.*)(?:.*\n)*?path\s?=\s?(.*)')
-    
-    if playlist and not playlist.endswith('.lpl'):
-        playlist = playlist + '.lpl'
-        
-    #in this constructor, if the last is a absolute path returns only that
-    playlist = Path(playlist_dir, playlist)
     
     #the playlist to be, scan content dir is a placeholder that disables refresh playlist
     json_lpl = {
