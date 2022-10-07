@@ -147,7 +147,7 @@ def mainaux(cfg: Path = typer.Argument(CONFIG, help='Path to the retroarch cfg f
     #in this constructor, if the last is a absolute path returns only that
     playlist = Path(playlist_dir, playlist)
     
-    if playlist.is_dir() or not os.access(playlist, os.W_OK):
+    if playlist.exists() and (not playlist.is_file() or not os.access(playlist, os.W_OK)):
         error(f'Invalid playlist file: {playlist}')
         raise typer.Exit(code=1)
 
