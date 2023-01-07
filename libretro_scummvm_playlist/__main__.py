@@ -61,15 +61,21 @@ forbidden    =  r'[\u0022\u003c\u003e\u007c\u0000\u0001\u0002\u0003\u0004\u0005\
                 r'\u0009\u000a\u000b\u000c\u000d\u000e\u000f\u0010\u0011\u0012\u0013\u0014\u0015' + \
                 r'\u0016\u0017\u0018\u0019\u001a\u001b\u001c\u001d\u001e\u001f\u003a\u002a\u003f\u005c\u002f\u0026]' 
 
-def getPath(cfg: Path, setting):
+def getPath(cfg: Path, setting: str, default_value: str):
     with open(cfg) as f:
         file_content = '[DUMMY]\n' + f.read()
     import configparser
     configParser = configparser.RawConfigParser()
     configParser.read_string(file_content)
-    fdir = os.path.expanduser(configParser['DUMMY'][setting].strip('"'))
-    if fdir == 'default':
+    try:
+        fdir = os.path.expanduser(configParser['DUMMY'][setting].strip('"'))
+    except:
         return None
+    if fdir == 'default':
+        if default_value:
+            return Path(cfg.parent,default_value)
+        else:
+            return None
     return Path(fdir)
 
 def writeExtraPaths(ini: Path, extra: Path, theme: Path, saves: Path, soundfont: Path):
@@ -135,10 +141,10 @@ def mainaux(cfg: Path = typer.Argument(CONFIG, help='Path to the retroarch cfg f
         error(f'Invalid Retroarch cfg file: {cfg}')
         raise typer.Exit(code=1)
     
-    playlist_dir = getPath(cfg, 'playlist_directory')
+    playlist_dir = getPath(cfg, 'playlist_directory', 'playlists')
     
-    if not playlist_dir.is_dir() or not os.access(playlist_dir, os.W_OK):
-        error(f'Invalid Retroarch playlist directory: {playlist_dir}')
+    if not playlist_dir or not playlist_dir.is_dir() or not os.access(playlist_dir, os.W_OK):
+        error(f'Invalid retroarch.cfg line: playlist_directory="{playlist_dir}"')
         raise typer.Exit(code=1)
 
     if playlist and not playlist.endswith('.lpl'):
@@ -151,9 +157,9 @@ def mainaux(cfg: Path = typer.Argument(CONFIG, help='Path to the retroarch cfg f
         error(f'Invalid playlist file: {playlist}')
         raise typer.Exit(code=1)
 
-    system_dir = getPath(cfg, 'system_directory')    
-    if not system_dir.is_dir():
-        error(f'Invalid Retroarch system directory: {system_dir}')
+    system_dir = getPath(cfg, 'system_directory', 'system')
+    if not system_dir or not system_dir.is_dir():
+        error(f'Invalid retroarch.cfg line: system_directory="{system_dir}"')
         raise typer.Exit(code=1)
 
     system   = Path(system_dir, 'scummvm.ini')
@@ -171,19 +177,19 @@ def mainaux(cfg: Path = typer.Argument(CONFIG, help='Path to the retroarch cfg f
         error(f'Extra scummvm theme dir does not exist.\nPlease see the documentation to download it.')
         raise typer.Exit(code=1)
     
-    saves_dir  = getPath(cfg, 'savefile_directory')
+    saves_dir  = getPath(cfg, 'savefile_directory', 'saves')
     if not saves_dir or not saves_dir.is_dir():
-        error(f'Invalid Retroarch saves directory: {saves_dir}')
+        error(f'Invalid retroarch.cfg line: savefile_directory="{saves_dir}"')
         raise typer.Exit(code=1)
         
-    cores_dir  = getPath(cfg, 'libretro_directory')
-    if not cores_dir.is_dir():
-        error(f'Invalid Retroarch cores directory: {cores_dir}')
+    cores_dir  = getPath(cfg, 'libretro_directory', 'cores')
+    if not cores_dir or not cores_dir.is_dir():
+        error(f'Invalid retroarch.cfg line: libretro_directory="{cores_dir}"')
         raise typer.Exit(code=1)
     core = os.path.abspath( Path(cores_dir, 'scummvm_libretro' + ( '.dll' if os.name == 'nt' else '.so' ) ) )
     
-    content_dir  = getPath(cfg, 'rgui_browser_directory')
-    if not content_dir:
+    content_dir  = getPath(cfg, 'rgui_browser_directory', None)
+    if not content_dir or not content_dir.is_dir():
         content_dir = ''
     
     with open(system) as f:
