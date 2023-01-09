@@ -71,7 +71,9 @@ def getPath(cfg: Path, setting: str, default_value: str):
         fdir = os.path.expanduser(configParser['DUMMY'][setting].strip('"'))
     except:
         return None
-    if fdir == 'default':
+    if fdir.startswith(r':\'):
+        fdir = fdir.replace(':', str(cfg.parent), 1)
+    elif fdir == 'default':
         if default_value:
             return Path(cfg.parent,default_value)
         else:
