@@ -11,7 +11,7 @@ scummvm games, and the manual scanner is unneeded with this program).
 
 2. Download the required engine files and extract them to the right dir.
 I recommend installing the scummvm required files with 'core system files
-downloader' in retroarch if you're running the normal core [1]_.
+downloader' in retroarch.
 
 3. Setup the paths to the required files in the scummvm core GUI options.
 \
@@ -30,12 +30,6 @@ If you'd like to try to download missing coverart until a PR with scummvm
 names is added to the thumbnail server try to install and use libretrofuzz:
 
 ``pip install --force-reinstall libretro_fuzz``
-
-.. [1] The diablodiab daily build core at http://build.bot.nu/nightly/ requires updated files from scummvm upstream, you can get them with:
-
-  http://build.bot.nu/assets/system/ScummVM.zip
-
-  Then extract the zip into the retroarch ``system`` directory.
 
 libretro-scummvm-playlist [OPTIONS] [CFG]
   :CFG:                 Path to the retroarch cfg file. If not default, asked from the user.
