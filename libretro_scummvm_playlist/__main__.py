@@ -79,7 +79,7 @@ def getPath(cfg: Path, setting: str, default_value: str):
         return cfg.parent / fdir
     elif fdir == 'default':
         if default_value:
-            return Path(cfg.parent,default_value)
+            return cfg.parent / default_value
         else:
             return None
     return Path(fdir)
