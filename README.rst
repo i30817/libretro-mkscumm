@@ -27,9 +27,9 @@ To update this program to the latest release with pip installed, type:
 ``pip install --force-reinstall libretro_scummvm_playlist``
 
 If you'd like to try to download missing coverart until a PR with scummvm
-names is added to the thumbnail server try to install and use libretrofuzz:
+names is added to the thumbnail server try to install and use libretro-fuzz:
 
-``pip install --force-reinstall libretro_fuzz``
+``pip install --force-reinstall libretrofuzz``
 
 libretro-scummvm-playlist [OPTIONS] [CFG]
   :CFG:                 Path to the retroarch cfg file. If not default, asked from the user.
