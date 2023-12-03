@@ -192,13 +192,6 @@ def mainaux(cfg: Path = typer.Argument(CONFIG, help='Path to the retroarch cfg f
                 + ( '_android' if hasattr(sys, 'getandroidapilevel') else '' ) \
                 + ( '.dll' if os.name == 'nt' else '.so' )
     core = os.path.abspath(Path(cores_dir, core_name))
-    # in android, this file\dir is innacessible for non RA apps, dont test it
-    if not hasattr(sys, 'getandroidapilevel'):
-        try:
-            core_path.is_file()
-        except PermissionError:
-            error(f'Invalid retroarch core: "{core}"')
-            raise typer.Exit(code=1)
     
     content_dir  = getPath(cfg, 'rgui_browser_directory', None)
     if not content_dir or not content_dir.is_dir():
