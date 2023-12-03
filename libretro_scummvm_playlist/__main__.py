@@ -49,6 +49,8 @@ if sys.platform == 'win32': #this is for 64 bits too
                 CONFIG = Path(var, 'RetroArch', 'retroarch.cfg')
 elif sys.platform == 'darwin':
     CONFIG = Path(Path.home(), 'Library', 'Application Support', 'RetroArch', 'config', 'retroarch.cfg')
+elif hasattr(sys, 'getandroidapilevel'):
+    CONFIG = Path("/", "storage", "emulated", "0", "Android", "data", "com.retroarch.aarch64", "files", "retroarch.cfg")
 else: #all the rest based on linux. If they arent based on linux, they'll try the else and fail harmlessly later
     var = os.getenv('XDG_CONFIG_HOME')
     if var:
@@ -238,6 +240,7 @@ def mainaux(cfg: Path = typer.Argument(CONFIG, help='Path to the retroarch cfg f
         'scan_search_recursively': True,
         'scan_search_archives': False,
         'scan_filter_dat_content': False,
+        'scan_overwrite_playlist': True,
         'items': []
     }
     invalid_paths = []
