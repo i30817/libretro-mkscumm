@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "libretro_scummvm_playlist"
-version = "2.4.2"
+version = "2.5.0"
 description = "libretro scummvm playlist builder"
 authors = ["i30817 <i30817@gmail.com>"]
 
