@@ -240,6 +240,7 @@ def mainaux(cfg: Path = typer.Argument(CONFIG, help='Path to the retroarch cfg f
         'scan_search_recursively': True,
         'scan_search_archives': False,
         'scan_filter_dat_content': False,
+        'scan_overwrite_playlist': True,
         'items': []
     }
     invalid_paths = []
