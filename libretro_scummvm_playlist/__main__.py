@@ -31,6 +31,7 @@ import io
 import re
 import time
 import sys
+import shutil
 
 ###########################################
 ########### SCRIPT SETTINGS ###############
@@ -201,7 +202,11 @@ def mainaux(cfg: Path = typer.Argument(CONFIG, help='Path to the retroarch cfg f
     
     with open(system) as f:
         text = f.read()
-    
+    def copy(source, target):
+        if hasattr(sys, 'getandroidapilevel'):
+            shutil.copy(source, target)
+        else:
+            os.link(source, target)
     #if the MT32 and CM32L roms exist in the system dir (for instance for dosbox)
     mt32rom1 = Path(system_dir, 'MT32_CONTROL.ROM')
     mt32rom2 = Path(system_dir, 'MT32_PCM.ROM')
@@ -211,16 +216,16 @@ def mainaux(cfg: Path = typer.Argument(CONFIG, help='Path to the retroarch cfg f
         target1 = Path(extra_dir, 'MT32_CONTROL.ROM')
         target2 = Path(extra_dir, 'MT32_PCM.ROM')
         if not target1.exists():
-            os.link(mt32rom1, target1)
+            copy(mt32rom1, target1)
         if not target2.exists():
-            os.link(mt32rom2, target2)
+            copy(mt32rom2, target2)
     if cm32rom1.is_file() and cm32rom2.is_file():
         target1 = Path(extra_dir, 'CM32L_CONTROL.ROM')
         target2 = Path(extra_dir, 'CM32L_PCM.ROM')
         if not target1.exists():
-            os.link(cm32rom1, target1)
+            copy(cm32rom1, target1)
         if not target2.exists():
-            os.link(cm32rom2, target2)
+            copy(cm32rom2, target2)
     
     #write scummvm core specific paths so the user doesn't have to
     soundfont = Path(extra_dir, 'Roland_SC-55.sf2')
