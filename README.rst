@@ -39,6 +39,8 @@ libretro-scummvm-playlist [OPTIONS] [CFG]
                         Windows default: ``%APPDATA%/RetroArch/retroarch.cfg``
   
                         MacOS default:   ``~/Library/Application Support/RetroArch/config/retroarch.cfg``
+
+                        Android default: ``/storage/emulated/0/Android/data/com.retroarch/files/retroarch.cfg``
   
   --playlist TEXT       Playlist name to create. If not provided, ScummVM.lpl
                         is created or recreated if it exists.  [default:
@@ -62,4 +64,9 @@ To install the program, type on the cmd line
 | Current code   | ``pip install --force-reinstall https://github.com/i30817/libretro-mkscumm/archive/master.zip`` |
 +----------------+-------------------------------------------------------------------------------------------------+
 
-In windows, you'll want to check the option to “Add Python to PATH” when installing python, to be able to install and execute the script from any path of the cmd line
+In windows, you'll want to check the option to “Add Python to PATH” when installing python, to be able to install and execute the script from any path of the cmd line.
+
+In android, first install termux from `F-Droid <https://f-droid.org/packages/com.termux/>`_ (play store version is out of date and can't be updated), then run in termux ``pkg install python3 termux-tools ; termux-setup-storage``.
+
+The first command installs python3 (and pip3) and some termux scripts, the second command will make a symlink to the shared storage of android so it's easier to pass a retroarch.cfg file if necessary.
+
